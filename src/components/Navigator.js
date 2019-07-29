@@ -1,35 +1,32 @@
 import React, {Component} from 'react';
-import {View, Text, Button} from 'react-native';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
-import commonStyles from '../commonStyles';
-import Home from '../screens/Home';
-import Driver from '../screens/Driver';
-import Passenger from '../screens/Passenger';
+import {View, Text, Button,StyleSheet} from 'react-native';
+
 
 export default class Nav extends Component {
     render(){
+        const { navigation } = this.props
         return(
-            <View style = {{flex:1, justifyContent:'center'}}>
-                <Button
+            <View style = {styles.container}>
+                <Button style = {styles.button}
                 title = 'Motorista'
-                onPress = {() => this.props.navigation.navigate('Driver')}></Button>
-                   <Button
+                onPress = {() => navigation.navigate('Driver')}></Button>
+                
+                   <Button style = {styles.button}
                 title = 'Caroneiro'
-                onPress = {() => this.props.navigation.navigate('Passenger')}></Button>
+                onPress = {() => navigation.navigate('Passenger')}></Button>
             </View>)
     }
 }
 
-const AppNavigator = createStackNavigator({
-    Home:{
-        screen:() => <Home></Home>
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        justifyContent:'space-around', 
+        alignItems:'center',
+        marginTop: 20,
     },
-    Driver:{
-        screen:() => <Driver></Driver>
-    },
-    Passenger:{
-        screen:() => <Passenger></Passenger>
-    },
-},{ initialRouteName: 'Home' });
+    button:{
+        height:390,
+    }
 
-const AppContainer = createAppContainer (AppNavigator);
+})

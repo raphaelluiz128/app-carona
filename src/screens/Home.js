@@ -11,13 +11,14 @@ import Nav from '../components/Navigator';
 
 export default class Home extends Component {
     render() {
+        const { navigation } = this.props
         return (
             <View style={styles.container}>
                 <ImageBackground source={todayImage}
                     style={styles.background}>
                     <View style={styles.titleBar}>
                         <Text style={styles.title}>
-                            hoje
+                            APP Carona Corp
                         </Text>
                         <Text style={styles.subtitle}>
                             {moment().locale('pt-br').format('ddd, D [de] MMMM')}
@@ -25,7 +26,7 @@ export default class Home extends Component {
                     </View>
                 </ImageBackground>
                 <View style={styles.taksContainer}>
-                    <Nav></Nav>
+                    <Nav navigation={navigation} />
                 </View>
             </View>
         )
