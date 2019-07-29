@@ -7,11 +7,11 @@ export default class Nav extends Component {
         const { navigation } = this.props
         return(
             <View style = {styles.container}>
-                <Button style = {styles.button}
+                <Button
                 title = 'Motorista'
                 onPress = {() => navigation.navigate('Driver')}></Button>
                 
-                   <Button style = {styles.button}
+                   <Button
                 title = 'Caroneiro'
                 onPress = {() => navigation.navigate('Passenger')}></Button>
             </View>)
@@ -21,12 +21,12 @@ export default class Nav extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent:'space-around', 
+        justifyContent:'space-between', 
         alignItems:'center',
-        marginTop: 20,
+        marginTop: 26,
+        marginLeft:80,
+        marginRight:80,
     },
-    button:{
-        height:390,
-    }
+   
 
 })

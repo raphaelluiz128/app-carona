@@ -18,7 +18,7 @@ export default class Home extends Component {
                     style={styles.background}>
                     <View style={styles.titleBar}>
                         <Text style={styles.title}>
-                            APP Carona Corp
+                            APP Carona
                         </Text>
                         <Text style={styles.subtitle}>
                             {moment().locale('pt-br').format('ddd, D [de] MMMM')}
