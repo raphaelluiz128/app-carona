@@ -1,15 +1,41 @@
 import React, { Component } from 'react';
 import {
     StyleSheet, Text, View, ImageBackground,
-    FlatList
+    FlatList, TextInput, Button
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 import todayImage from '../../assets/imgs/today.jpg';
 import commonStyles from '../commonStyles';
 import Nav from '../components/Navigator';
+import { logicalExpression } from '@babel/types';
+
+
+
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            enableMenu: false,
+            enableLogin: true,
+            name: ''
+        };
+    }
+
+    login() {
+        let enableMenu = !this.state.enableMenu;
+        let enableLogin = !this.state.enableLogin;
+        this.setState({
+            enableMenu: enableMenu,
+            enableLogin: enableLogin
+        });
+
+
+    }
+
     render() {
         const { navigation } = this.props
         return (
@@ -25,13 +51,33 @@ export default class Home extends Component {
                         </Text>
                     </View>
                 </ImageBackground>
-                <View style={styles.taksContainer}>
-                    <Nav navigation={navigation} />
-                </View>
+
+                {this.state.enableLogin ?
+                    <View style={styles.login}>
+                        <TextInput style={styles.textLogin} placeholder="Digite o seu nome" onChangeText={(value) => this.setState({ name: value })}
+                            value={this.state.name}></TextInput>
+                        <Button title="Login" onPress={() => this.login()}></Button>
+                    </View>
+                     : 
+                    <View style={styles.loginOk}>
+                    <Text style={styles.textLoginOk}> Seja bem vindo {this.state.name}</Text>
+                    <Text style={styles.avisoLoginOk}> Por favor escolha uma opção abaixo</Text> 
+                    </View>
+                }
+
+                {this.state.enableMenu ?
+                    <View style={styles.taksContainer} >
+                        <Nav navigation={navigation} />
+                    </View>
+                    : null}
+
+
             </View>
         )
+    }
 }
-}
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -58,8 +104,44 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginBottom: 30,
     },
+    login: {
+        flex: 2,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginTop: 26,
+        marginLeft: 80,
+        marginRight: 80,
+    },
+    loginOk: {
+        flex: 2,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginTop: 30,
+    },
+    avisoLoginOk: {
+        fontFamily: commonStyles.fontFamily,
+        color: commonStyles.colors.secondary,
+        fontSize: 22,
+        marginTop: 15,
+    },
+    textLogin: {
+        fontFamily: commonStyles.fontFamily,
+        color: commonStyles.colors.secondary,
+        fontSize: 16,
+        borderColor: 'gray',
+        borderBottomWidth: 1
+    },
+    textLoginOk: {
+        fontFamily: commonStyles.fontFamily,
+        color: commonStyles.colors.secondary,
+        fontSize: 28,
+    },
     taksContainer: {
-        flex: 7,
+        flex: 6,
+        marginTop:35
     }
 
 })
+
