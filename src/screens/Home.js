@@ -5,11 +5,13 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/pt-br';
-import todayImage from '../../assets/imgs/today.jpg';
+import todayImage from '../../assets/imgs/month.jpg';
 import commonStyles from '../commonStyles';
 import Nav from '../components/Navigator';
 import { logicalExpression } from '@babel/types';
 import api from '../services/api';
+import {AsyncStorage} from 'react-native';
+
 
 
 
@@ -22,13 +24,21 @@ export default class Home extends Component {
             enableMenu: false,
             enableLogin: true,
             name: '',
+            id:'',
             messageLogin: 'xx'
         };
     }
 
+    async storeItem(key, item) {
+        try {
+            var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
+            return jsonOfItem;
+        } catch (error) {
+          console.log(error.message);
+        }
+    }
 
     info() {
-
         Alert.alert(
             'Atenção',
             this.state.messageLogin,
@@ -37,38 +47,28 @@ export default class Home extends Component {
             ],
             { cancelable: false },
         );
-
     }
 
-
-    async login() {
-        
+    async login() {        
         if (this.state.name != '') {
-            
                 const response = await api.post('/users/login',
                     { name: this.state.name });
-                    console.warn(response.data);
                 if (response.data.user.length > 0) {
                     let enableMenu = !this.state.enableMenu;
                     let enableLogin = !this.state.enableLogin;
+                    await AsyncStorage.setItem('idUser', JSON.stringify(response.data['user'][0]['id']));
+                    await AsyncStorage.setItem('nameUser',response.data['user'][0]['name']);
                     this.setState({
                         enableMenu: enableMenu,
-                        enableLogin: enableLogin
+                        enableLogin: enableLogin,
                     });
-                    console.warn(response);
                 } else {
                     this.setState({messageLogin: "Usuário não encontrado, informe novamente."},() => this.info());   
                 }
-            
         } else {
-            
             this.setState({messageLogin: "Dados em branco, informe novamente."},() => this.info());
-            
-           
         }
     }
-
-
 
     render() {
         const { navigation } = this.props
@@ -85,7 +85,6 @@ export default class Home extends Component {
                         </Text>
                     </View>
                 </ImageBackground>
-
                 {this.state.enableLogin ?
                     <View style={styles.login}>
                         <TextInput style={styles.textLogin} placeholder="Digite o seu nome" onChangeText={(value) => this.setState({ name: value })}
@@ -98,20 +97,15 @@ export default class Home extends Component {
                         <Text style={styles.avisoLoginOk}> Por favor escolha uma opção abaixo</Text>
                     </View>
                 }
-
                 {this.state.enableMenu ?
                     <View style={styles.taksContainer} >
                         <Nav navigation={navigation} />
                     </View>
                     : null}
-
-
             </View>
         )
     }
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -163,19 +157,18 @@ const styles = StyleSheet.create({
     textLogin: {
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 16,
+        fontSize: 18,
         borderColor: 'gray',
         borderBottomWidth: 1
     },
     textLoginOk: {
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 28,
+        fontSize: 25,
     },
     taksContainer: {
-        flex: 6,
+        flex: 5,
         marginTop: 35
     }
-
 })
 

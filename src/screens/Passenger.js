@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
 import {
     StyleSheet, Text, View, ImageBackground,
-    FlatList
+    Alert, TextInput, Button
 } from 'react-native';
-import moment from 'moment';
-import 'moment/locale/pt-br';
-import todayImage from '../../assets/imgs/today.jpg';
 import commonStyles from '../commonStyles';
-import Nav from '../components/Navigator';
+import todayImage from '../../assets/imgs/month.jpg';
+import QRCode from 'react-native-qrcode-svg';
+
 
 export default class Home extends Component {
+
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            qrtext: '122121',
+        };
+    }
+
+async share(){
+    Alert.alert(
+        'Atenção',
+        'Dados enviados',
+        [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+        { cancelable: false },
+    );
+}
+
     render() {
         return (
             <View style={styles.container}>
@@ -17,19 +37,22 @@ export default class Home extends Component {
                     style={styles.background}>
                     <View style={styles.titleBar}>
                         <Text style={styles.title}>
-                            passenger
+                            APP Carona
                         </Text>
                         <Text style={styles.subtitle}>
-                            {moment().locale('pt-br').format('ddd, D [de] MMMM')}
+                            Passageiro
                         </Text>
                     </View>
                 </ImageBackground>
                 <View style={styles.taksContainer}>
-                    <Nav></Nav>
-                </View>
+
+<Button 
+                title = 'Compartilhar localização'
+                onPress = {() => this.shareLocal()}></Button>
+</View>
             </View>
         )
-}
+    }
 }
 
 const styles = StyleSheet.create({
@@ -42,6 +65,11 @@ const styles = StyleSheet.create({
     titleBar: {
         flex: 1,
         justifyContent: 'flex-end',
+    },
+    text: {
+        fontFamily: commonStyles.fontFamily,
+        color: commonStyles.colors.secondary,
+        fontSize: 18,
     },
     title: {
         fontFamily: commonStyles.fontFamily,
@@ -58,7 +86,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     taksContainer: {
-        flex: 7,
-    }
+        marginTop:20,
+        flexDirection:"column",
+        alignItems:"center",
+        justifyContent:"space-around",
+        flex: 6,
+    },
+    
 
 })

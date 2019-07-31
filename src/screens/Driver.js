@@ -1,35 +1,75 @@
 import React, { Component } from 'react';
 import {
     StyleSheet, Text, View, ImageBackground,
-    FlatList
+    Alert, TextInput, Button
 } from 'react-native';
-import moment from 'moment';
-import 'moment/locale/pt-br';
-import todayImage from '../../assets/imgs/today.jpg';
 import commonStyles from '../commonStyles';
-import Nav from '../components/Navigator';
+import todayImage from '../../assets/imgs/month.jpg';
+import QRCode from 'react-native-qrcode-svg';
+import api from '../services/api';
+import {AsyncStorage} from 'react-native';
 
 export default class Home extends Component {
-    render() {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            idUser : await AsyncStorage.getItem('idUser'),
+            nameUser : await AsyncStorage.getItem('nameUser'),
+            qrtext:  await AsyncStorage.getItem('idUser') +'-'+
+            await AsyncStorage.getItem('nameUser'),
+            message:''
+        };
+    }
+
+async alertShare(){
+    Alert.alert(
+        'Atenção',
+        this.state.message,
+        [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+        { cancelable: false },
+    );
+}
+
+async shareLocal() {        
+  
+    
+            const response = await api.put('/users/isDriver/'+id,
+                { driver: 1 });
+        }
+
+
+render() {
+        let base64Logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAA..';
         return (
             <View style={styles.container}>
                 <ImageBackground source={todayImage}
                     style={styles.background}>
                     <View style={styles.titleBar}>
                         <Text style={styles.title}>
-                            driver
+                            APP Carona
                         </Text>
                         <Text style={styles.subtitle}>
-                            {moment().locale('pt-br').format('ddd, D [de] MMMM')}
+                            Motorista
                         </Text>
                     </View>
                 </ImageBackground>
                 <View style={styles.taksContainer}>
-                    <Nav></Nav>
-                </View>
+<QRCode value={this.state.qrtext}
+   logo={{uri: base64Logo}}
+   size={200}
+   logoSize={40}
+   logoBackgroundColor='transparent'/>
+<Button 
+                title = 'Compartilhar localização'
+                onPress = {() => this.shareLocal()}></Button>
+</View>
             </View>
         )
-}
+    }
 }
 
 const styles = StyleSheet.create({
@@ -42,6 +82,11 @@ const styles = StyleSheet.create({
     titleBar: {
         flex: 1,
         justifyContent: 'flex-end',
+    },
+    text: {
+        fontFamily: commonStyles.fontFamily,
+        color: commonStyles.colors.secondary,
+        fontSize: 18,
     },
     title: {
         fontFamily: commonStyles.fontFamily,
@@ -58,7 +103,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     taksContainer: {
-        flex: 7,
-    }
+        marginTop:20,
+        flexDirection:"column",
+        alignItems:"center",
+        justifyContent:"space-around",
+        flex: 6,
+    },
+    
 
 })
