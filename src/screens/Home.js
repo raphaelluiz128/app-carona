@@ -11,6 +11,7 @@ import Nav from '../components/Navigator';
 import { logicalExpression } from '@babel/types';
 import api from '../services/api';
 import {AsyncStorage} from 'react-native';
+import {requestCamera, requestLocation, requestCLocation} from '../services/permissions';
 
 
 
@@ -28,6 +29,12 @@ export default class Home extends Component {
             messageLogin: 'xx'
         };
     }
+
+    async componentDidMount() {
+        requestCamera();
+        requestLocation();
+        requestCLocation();
+      }
 
     async storeItem(key, item) {
         try {
@@ -53,11 +60,15 @@ export default class Home extends Component {
         if (this.state.name != '') {
                 const response = await api.post('/users/login',
                     { name: this.state.name });
+                    console.warn(response);
+                    console.log(response);
                 if (response.data.user.length > 0) {
                     let enableMenu = !this.state.enableMenu;
                     let enableLogin = !this.state.enableLogin;
                     await AsyncStorage.setItem('idUser', JSON.stringify(response.data['user'][0]['id']));
                     await AsyncStorage.setItem('nameUser',response.data['user'][0]['name']);
+                    const date =  (moment().locale('pt-br').format('ddd D [de] MMMM YYYY'));
+                    await AsyncStorage.setItem('date',date);
                     this.setState({
                         enableMenu: enableMenu,
                         enableLogin: enableLogin,
