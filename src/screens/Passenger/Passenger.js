@@ -3,11 +3,11 @@ import {
     StyleSheet, Text, View, ImageBackground,
     Alert, Button
 } from 'react-native';
-import commonStyles from '../commonStyles';
-import todayImage from '../../assets/imgs/month.jpg';
+import commonStyles from '../../commonStyles';
+import todayImage from '../../../assets/imgs/month.jpg';
 import QRCode from 'react-native-qrcode-svg';
-import api from '../services/api';
-import Map from '../components/Map';
+import api from '../../services/api';
+import Map from '../../components/Map';
 import { AsyncStorage } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -98,7 +98,7 @@ export default class Home extends Component {
                 distance: distance,
                 showButton: true,
                 showQrCode: false,
-            },() => this.alertShare('Dados encontrados',this.state.lngDriver));
+            },() => this.alertShare('Dados encontrados'));
         } catch (error) {
             console.log(error);
         }

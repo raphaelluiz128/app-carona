@@ -1,8 +1,8 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-import Home from './screens/Home';
-import Driver from './screens/Driver';
-import Passenger from './screens/Passenger';
+import Home from './screens/Home/Home';
+import Driver from './screens/Driver/Driver';
+import Passenger from './screens/Passenger/Passenger';
 
 const AppNavigator = createStackNavigator({
    Home,

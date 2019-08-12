@@ -3,10 +3,10 @@ import {
     StyleSheet, Text, View, ImageBackground,
     Alert, TextInput, Button
 } from 'react-native';
-import commonStyles from '../commonStyles';
-import todayImage from '../../assets/imgs/month.jpg';
+import commonStyles from '../../commonStyles';
+import todayImage from '../../../assets/imgs/month.jpg';
 import QRCode from 'react-native-qrcode-svg';
-import api from '../services/api';
+import api from '../../services/api';
 import { AsyncStorage } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 

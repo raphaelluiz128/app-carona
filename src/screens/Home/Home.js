@@ -5,14 +5,14 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/pt-br';
-import todayImage from '../../assets/imgs/month.jpg';
-import commonStyles from '../commonStyles';
-import Nav from '../components/Navigator';
+import todayImage from '../../../assets/imgs/month.jpg';
+import commonStyles from '../../commonStyles';
+import Nav from '../../components/Navigator';
 import { logicalExpression } from '@babel/types';
-import api from '../services/api';
+import api from '../../services/api';
 import {AsyncStorage} from 'react-native';
-import {requestCamera, requestLocation, requestCLocation} from '../services/permissions';
-
+import {requestCamera, requestLocation, requestCLocation} from '../../services/permissions';
+import {Container, TitleBar, SubTitle, Login, TextLogin, Title, Background,TextLoginOk, AvisoLoginOk, LoginOk, TaksContainer } from './Styles';
 
 
 
@@ -80,43 +80,43 @@ export default class Home extends Component {
         }
     }
 
+    
     render() {
         const { navigation } = this.props
-        return (
-            <View style={styles.container}>
-                <ImageBackground source={todayImage}
-                    style={styles.background}>
-                    <View style={styles.titleBar}>
-                        <Text style={styles.title}>
+return (
+            <Container>
+                <Background source={todayImage}>
+                    <TitleBar>
+                        <Title>
                             APP Carona
-                        </Text>
-                        <Text style={styles.subtitle}>
+                        </Title>
+                        <SubTitle>
                             {moment().locale('pt-br').format('ddd, D [de] MMMM')}
-                        </Text>
-                    </View>
-                </ImageBackground>
+                        </SubTitle>
+                    </TitleBar>
+                </Background>
                 {this.state.enableLogin ?
-                    <View style={styles.login}>
-                        <TextInput style={styles.textLogin} placeholder="Digite o seu nome" onChangeText={(value) => this.setState({ name: value })}
-                            value={this.state.name}></TextInput>
+                    <Login>
+                        <TextLogin placeholder="Digite o seu nome" onChangeText={(value) => this.setState({ name: value })}
+                            value={this.state.name}></TextLogin>
                         <Button title="Login" onPress={() => this.login()}></Button>
-                    </View>
+                    </Login>
                     :
-                    <View style={styles.loginOk}>
-                        <Text style={styles.textLoginOk}> Seja bem vindo {this.state.name}</Text>
-                        <Text style={styles.avisoLoginOk}> Por favor escolha uma opção abaixo</Text>
-                    </View>
+                    <LoginOk>
+                        <TextLoginOk> Seja bem vindo {this.state.name}</TextLoginOk>
+                        <AvisoLoginOk> Por favor escolha uma opção abaixo</AvisoLoginOk>
+                    </LoginOk>
                 }
                 {this.state.enableMenu ?
-                    <View style={styles.taksContainer} >
+                    <TaksContainer>
                         <Nav navigation={navigation} />
-                    </View>
+                    </TaksContainer>
                     : null}
-            </View>
+            </Container>
         )
     }
 }
-
+/*
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -181,7 +181,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-around",
        
-
     }
-})
-
+    
+})*/
