@@ -1,3 +1,23 @@
 react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
 
 npm cache clean --force
+
+cd android ./gradlew clean
+
+./gradlew assembleDebug or assembleRelease
+
+
+# NPM
+watchman watch-del-all
+npm cache clean
+
+# Android, if you encounter `com.android.dex.DexException: Multiple dex files define Landroid/support/v7/appcompat/R$anim`, then clear build folder.
+cd android
+./gradlew clean
+cd ..
+
+Remove the files you might have on:
+
+android/app/src/main/res/drawable-mdpi/
+android/app/src/main/res/drawable-xhdpi/
+android/app/src/main/res/drawable-xxhdpi/

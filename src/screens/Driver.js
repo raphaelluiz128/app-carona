@@ -60,7 +60,7 @@ export default class Home extends Component {
 
     async shareLocal() {
         const response = await api.put('/users/isDriver/' + this.state.idUser,
-            { driver : 1, lat : this.state.lat, lng : this.state.lng});
+            { driver : 1, lat : this.state.lat, lng : this.state.lng, passenger: 0});
             this.alertShare();
     }
 
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 50,
+        fontSize: 30,
         marginLeft: 20,
         marginBottom: 10,
     },

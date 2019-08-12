@@ -10,7 +10,6 @@ export default class Nav extends Component {
                 <Button
                 title = 'Motorista'
                 onPress = {() => navigation.navigate('Driver')}></Button>
-                
                    <Button
                 title = 'Caroneiro'
                 onPress = {() => navigation.navigate('Passenger')}></Button>
@@ -21,11 +20,10 @@ export default class Nav extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent:'space-between', 
+        flex:1,
+        justifyContent:'space-around', 
         alignItems:'center',
         marginTop: 26,
-        marginLeft:80,
-        marginRight:80,
     },
    
 

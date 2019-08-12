@@ -60,7 +60,6 @@ export default class Home extends Component {
         if (this.state.name != '') {
                 const response = await api.post('/users/login',
                     { name: this.state.name });
-                    console.warn(response);
                     console.log(response);
                 if (response.data.user.length > 0) {
                     let enableMenu = !this.state.enableMenu;
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 50,
+        fontSize: 30,
         marginLeft: 20,
         marginBottom: 10,
     },
@@ -147,22 +146,20 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         marginTop: 26,
-        marginLeft: 80,
-        marginRight: 80,
     },
     loginOk: {
         flex: 2,
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
-        marginTop: 30,
+        justifyContent:"center",
+        marginTop: 60,
     },
     avisoLoginOk: {
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 22,
+        fontSize: 18,
         marginTop: 15,
     },
     textLogin: {
@@ -175,11 +172,16 @@ const styles = StyleSheet.create({
     textLoginOk: {
         fontFamily: commonStyles.fontFamily,
         color: commonStyles.colors.secondary,
-        fontSize: 25,
+        fontSize: 22,
     },
     taksContainer: {
         flex: 5,
-        marginTop: 35
+        marginTop: 35,
+        flexDirection:'row',
+        alignItems: "center",
+        justifyContent: "space-around",
+       
+
     }
 })
 
